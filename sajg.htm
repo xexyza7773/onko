@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML><HEAD>
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=Shift_JIS">
+<!--META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=x-sjis"-->
+<META NAME="Author" CONTENT="XEXYZA_7773">
+<META NAME="Keywords" CONTENT="パソコン,PC,Personal Computer,PC-9801,PC-98,PC-286,PC-386,PC-486,PC-586,PC-8801,PC-88,PC-88VA,MSX,FM-TOWNS,ゲーム,GAME,Video Game,音樂,音楽,Music,DTM,MIDI">
+<META NAME="Description" CONTENT="XEXYZA_7773のウェブサイトです。パソコン、音樂、謎な思考、等を扱ふ豫定です。">
+<LINK REL="START" HREF="./index.htm"><!-- 開始ページ -->
+<LINK REL="CONTENTS" HREF="./menu.htm"><!-- 目次ページ -->
+<LINK REL="PREV" HREF="./menu.htm"><!-- 前ページ -->
+<LINK REV="MADE" HREF="mailto:xe_7@yahoo.co.jp"><!-- 手紙 -->
+<TITLE>XEXYZA_7773's web site "温故知新" - SAJ-98の使用法</TITLE>
+</HEAD>
+<BODY TEXT="#FFFFD0" BGCOLOR="#000000" LINK="#2070FF" VLINK="#B03030" ALINK="#FF8080" BACKGROUND="img/back00.jpg">
+<BR><BR><BR>
+<CENTER><H1>SAJ-98の使用法</H1></CENTER><BR>
+<!-- <IMG SRC="img/game.jpg" WIDTH=640 HEIGHT=480 ALT="ゲーム畫面"><BR> -->
+<!-- <BR> -->
+●SAJ-98の使用方法が、ある程度解析出来たのでその内容です。<BR><BR>
+※以前ツイッターで報告した内容そのままです。<BR><!--
+--><IMG SRC="img/saj98a.jpg" WIDTH=571 HEIGHT=680 ALT="SAJ-98表"><!--
+--><IMG SRC="img/saj98b.jpg" WIDTH=579 HEIGHT=680 ALT="SAJ-98裏"><BR>
+<BR><BR>
+<PRE>
+READ 0E7E0H:1P入力 0E7E2H:2P入力?(未確認) 他:未使用?
+ビット位置と意味
+  b7: ？ どの端子か不明??
+  b6: コモン端子と思われる
+  b5: Ｂボタン
+  b4: Ａボタン
+  b3: 右ボタン
+  b2: 左ボタン
+  b1: 下ボタン
+  b0: 上ボタン
+  各ビットの意味 1=離 0=押
+
+WRITE 0E7E0:出力端子の制禦
+  b7:2P謎
+  b6:1P謎
+  b5:2Pコモン
+  b4:1Pコモン
+  b3:2PＢボタン 
+  b2:2PＡボタン 
+  b1:1PＢボタン 
+  b0:1PＡボタン
+各ビット恐らく1でGNDに落とす,0でGNDに落とすのをやめる
+
+電源投入時に入力ポート(0E7E0H,0E7E2H)から読むと07FHが読み出される模様です。
+最上位ビットが何に繋がっているか不明なのでとりあえず電源投入時の値を示したままにする事にして、コモンをGNDに設定する為、0E7E0Hに030Hを出力すると入力が読めるようになる模様。
+謎ビット(各入力ポートのb7,出力ポートのb7-6)だけ論理が他と逆なのか、他は出力1でGNDに落ちる為、結果出力のNOTが入力側に見えますが、謎ビットだけそのまま見えます。
+なので出力ポートに出力する(のが好ましいと思われる)値はF0Hでなく30Hになります。画像はいじって試すのに使ったBASICプログラム
+<IMG SRC="img/saj98c.jpg" WIDTH=640 HEIGHT=256 ALT="SAJ-98解析中BASIC畫面"><BR>
+<BR>
+
+ちなみにI/Oアドレスは全て工場出荷設定のものです。ポート設定を移動した時の位置は次の通り。
+ADDR#1 JP1:5-6 I/O:0E7E0H-0E7E7H
+ADDR#2 JP1:3-4 I/O:0E5E0H-0E5E7H
+ADDR#3 JP1:1-2 I/O:0E3E0H-0E3E7H
+※コネクタは右側がポート1、左側がポート2
+</PRE>
+
+
+<!-- <BR>
+<BR>●<BR> -->
+<BR><BR>
+<A HREF="menu.htm"><IMG SRC="img/modoru.jpg" WIDTH=128 HEIGHT=64 BORDER=0 ALT="戻"></A><BR>
+<BR>
+<HR>
+<FONT SIZE=1>Copyright (C) 2022 by XEXYZA_7773. All rights reserved.</FONT>
+</BODY></HTML>
+
